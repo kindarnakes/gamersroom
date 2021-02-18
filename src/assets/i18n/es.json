@@ -1,0 +1,17 @@
+{
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "TWITCH": "Entrar con Twitch",
+    "SIGN IN": "Entrar",
+    "SIGN UP": "Registrarse",
+    "USERNAME": "Nombre de usuario",
+    "USERNAME REQUIRED": "El nombre de usuario es obligatorio",
+    "USERNAME INVALID":"El nombre de usuario no puede contener caracteres especiales y debe ser de al menos 6 caracteres y máximo de 30",
+    "EMAIL REQUIRED":"El correo electrónico es obligatorio",
+    "EMAIL INVALID":"El correo electrónico debe tener un formato válido",
+    "PASSWORD REQUIRED":"La contraseña es obligatoria",
+    "PASSWORD INVALID":"La contraseña debe contener al menos una letra minúscula, una mayúscula, un número y un carácter especial, su longitud mínima es 6 y su máxima es 16",
+    "PROFILE": "Perfil",
+    "SIGN OUT": "Salir",
+    "NO USER": "Correo electrónico y/o contraseña incorrecto/s"
+}

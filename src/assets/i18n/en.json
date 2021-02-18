@@ -1,0 +1,17 @@
+{
+    "EMAIL": "E-mail",
+    "PASSWORD": "Password",
+    "TWITCH": "Sign In With Twitch",
+    "SIGN IN": "Sign In",
+    "SIGN UP": "Sign Up",
+    "USERNAME": "Username",
+    "USERNAME REQUIRED": "Username field is obligatory",
+    "USERNAME INVALID":"The username cannot contain any special characters and must be at least 6 characters long and a maximum of 30",
+    "EMAIL REQUIRED":"Email field is obligatory",
+    "EMAIL INVALID":"Email must be in valid format",
+    "PASSWORD REQUIRED":"Password field is obligatory",
+    "PASSWORD INVALID":"The password must contain at least one lowercase letter, one uppercase letter, a number and a special character, its minimum length is 6 and its maximum is 16",
+    "PROFILE": "Profile",
+    "SIGN OUT": "Log out",
+    "NO USER": "Invalid email and/or password"
+}
