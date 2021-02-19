@@ -13,5 +13,6 @@
     "PASSWORD INVALID":"La contraseña debe contener al menos una letra minúscula, una mayúscula, un número y un carácter especial, su longitud mínima es 6 y su máxima es 16",
     "PROFILE": "Perfil",
     "SIGN OUT": "Salir",
-    "NO USER": "Correo electrónico y/o contraseña incorrecto/s"
+    "NO USER": "Correo electrónico y/o contraseña incorrecto/s",
+    "ERROR GOOGLE": "No has podido loguearte en tu cuenta"
 }

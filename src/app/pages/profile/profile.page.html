@@ -8,5 +8,39 @@
 </ion-header>
 
 <ion-content>
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected">
+    <ion-segment-button value="profile">
+      <ion-label>{{'PROFILE' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="post">
+      <ion-label>{{'POST' | translate}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div id="profile" *ngIf="this.segment">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img [src]="this.image">
+      </ion-avatar>
+      <ion-label class="username"><strong>{{this.userService.profile.username}}</strong></ion-label>
+    </ion-item>
+    <br />
+    <br />
+    <ion-item>
+      <ion-text>
+        {{this.userService.profile.description}}
+      </ion-text>
+    </ion-item>
+    <br />
+    <br />
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <ion-button color="secondary" shape="round" fill="outline" (click)="edit()">
+        {{'EDIT' | translate}}</ion-button>
+    </div>
+  </div><!-- aqui acaba perfil-->
 
+  <div id="posts" *ngIf="!this.segment">
+    <ion-item *ngFor="let p of posts; let i = index">
+      {{p.text}}
+    </ion-item>
+  </div>
 </ion-content>

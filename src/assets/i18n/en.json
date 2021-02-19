@@ -13,5 +13,6 @@
     "PASSWORD INVALID":"The password must contain at least one lowercase letter, one uppercase letter, a number and a special character, its minimum length is 6 and its maximum is 16",
     "PROFILE": "Profile",
     "SIGN OUT": "Log out",
-    "NO USER": "Invalid email and/or password"
+    "NO USER": "Invalid email and/or password",
+    "ERROR GOOGLE": "Can't log in your account"
 }

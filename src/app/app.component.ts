@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './services/auth.service';
 import { TranslationService } from './services/translation.service';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -20,11 +21,11 @@ export class AppComponent implements OnInit {
     { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
     { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
     { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'SIGN OUT', url: '/exit', icon: 'exit' },
+    { title: 'SIGN OUT', url: '/exit', icon: 'log-out' },
   ];
   public noLogappPages = [
-    { title: 'SIGN IN', url: '/login', icon: 'mail' },
-    { title: 'SIGN UP', url: '/signup', icon: 'paper-plane' }
+    { title: 'SIGN IN', url: '/login', icon: 'log-in' },
+    { title: 'SIGN UP', url: '/signup', icon: 'duplicate' }
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private translate: TranslateService,
     private tranS: TranslationService,
-    public auth: AuthService
+    public auth: AuthService,
+    public userService: UserService
   ) {
     this.initializeApp();
   }
@@ -73,5 +75,8 @@ export class AppComponent implements OnInit {
 
   signOut(){
     this.auth.signOut();
+  }
+  setMyProfile(){
+    this.userService.profile = this.auth.user;    
   }
 }

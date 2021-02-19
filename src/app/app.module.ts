@@ -21,6 +21,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { UtilsService } from './services/utils.service';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 
 export function setTranslateLoader(http: any) {
@@ -50,7 +51,8 @@ export function setTranslateLoader(http: any) {
     AuthService,
     HTTP,
     UserService,
-    UtilsService
+    UtilsService,
+    GooglePlus
   ],
   bootstrap: [AppComponent],
 })

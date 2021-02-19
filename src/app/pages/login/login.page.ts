@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class LoginPage implements OnInit {
   public user: FormGroup;
   public error;
+  public errorGoogle;
 
   constructor(public aut: AuthService,
     private formBuilder: FormBuilder, private router: Router, private userService: UserService,
@@ -33,6 +34,9 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.translate.get('NO USER').subscribe((res: string) => {
       this.error = res;
+    });
+    this.translate.get('ERROR GOOGLE').subscribe((res: string) => {
+      this.errorGoogle = res;
     });
   }
 
@@ -54,9 +58,12 @@ export class LoginPage implements OnInit {
         if (newUser.id && newUser.id > 0) {
 
           this.aut.user = { ...newUser as User };
-          console.log(this.aut.user);
-          console.log(this.aut.isLoggin());
           await this.utils.stopLoading();
+          console.log(this.aut.user);
+          this.userService.profile = this.aut.user;
+          console.log(this.userService.profile);
+          
+          
           this.router.navigate(['profile']);
         } else {
           await this.utils.stopLoading();
@@ -74,6 +81,23 @@ export class LoginPage implements OnInit {
     });
 
     console.log(user);
+  }
+
+  async logGoogle(){
+    await this.utils.presentLoading();
+
+    await this.aut.loginGoogle().then(async r =>{
+      if(this.aut.isLoggin()){
+        await this.utils.stopLoading();
+        this.userService.profile = this.aut.user;
+        this.router.navigate(['profile']);
+      }else{
+        await this.utils.stopLoading();
+        await this.utils.presentToast(this.errorGoogle, "danger");
+      }
+    });
+    console.log(this.aut.user);
+    
   }
 
 }

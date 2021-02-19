@@ -26,3 +26,15 @@ ion-menu-button {
   #container a {
     text-decoration: none;
   }
+
+  .username{
+    font-size: 1.8em;
+    text-align: center;
+  }
+
+  ion-avatar{
+    width: 100% !important;  
+    height : 100% !important;  
+    max-width: 15em !important;  //any size
+    max-height: 15em !important; //any size 
+  }
