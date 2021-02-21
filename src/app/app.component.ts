@@ -17,10 +17,9 @@ export class AppComponent implements OnInit {
   public profile;
   public appPages = [
     { title: 'PROFILE', url: '/profile', icon: 'person' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
+    { title: 'FRIENDS', url: '/friends', icon: 'people' },
+    { title: 'DISCOVER', url: '/discover', icon: 'globe' },
+    { title: 'SETINGS', url: '/settings', icon: 'settings' },
     { title: 'SIGN OUT', url: '/exit', icon: 'log-out' },
   ];
   public noLogappPages = [

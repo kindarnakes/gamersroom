@@ -15,32 +15,138 @@
     <ion-segment-button value="post">
       <ion-label>{{'POST' | translate}}</ion-label>
     </ion-segment-button>
+    <ion-segment-button value="petitions" *ngIf="this.userService.profile.id == this.aut.user.id">
+      <ion-label>{{'PETITIONS' | translate}}</ion-label>
+    </ion-segment-button>
   </ion-segment>
-  <div id="profile" *ngIf="this.segment">
+  <form id="profile" *ngIf="this.segment == 'profile'" [formGroup]="user" (ngSubmit)="this.editUser()">
+
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="addFriend()"
+        *ngIf="this.userService.profile.id != this.aut.user.id && !(this.aut.friends.indexOf(this.userService.profile.id) >= 0)">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
     <ion-item lines="none">
-      <ion-avatar slot="start">
-        <img [src]="this.image">
+      <ion-avatar class="avatar" slot="start">
+        <img [src]="this.image" *ngIf="this.userService.profile.id == this.aut.user.id" (click)="changeAvatar()"
+          alt="" />
+        <img [src]="this.image" *ngIf="this.userService.profile.id != this.aut.user.id" alt="" />
       </ion-avatar>
-      <ion-label class="username"><strong>{{this.userService.profile.username}}</strong></ion-label>
+      <ion-label class="username" *ngIf="!this.edit"><strong>{{this.userService.profile.username}}</strong></ion-label>
+      <ion-input class="username" *ngIf="this.edit" type="text" formControlName="username"
+        [placeholder]="'USERNAME' | translate"></ion-input>
     </ion-item>
     <br />
     <br />
     <ion-item>
-      <ion-text>
+      <ion-textarea *ngIf="this.edit" formControlName="description" [placeholder]="'DESCRIPTION' | translate"
+        autocapitalize="true" auto-grow="true"></ion-textarea>
+      <ion-text *ngIf="!this.edit">
         {{this.userService.profile.description}}
       </ion-text>
     </ion-item>
     <br />
     <br />
-    <div style="display: flex; justify-content: center; align-items: center;">
-      <ion-button color="secondary" shape="round" fill="outline" (click)="edit()">
+    <div style="display: flex; justify-content: center; align-items: center;"
+      *ngIf="!this.edit && this.userService.profile.id == this.aut.user.id">
+      <ion-button color="secondary" shape="round" fill="outline" (click)="editOn()">
         {{'EDIT' | translate}}</ion-button>
     </div>
-  </div><!-- aqui acaba perfil-->
+    <div style="text-align: right;" *ngIf="this.edit">
+      <ion-button *ngIf="!user.valid" shape="round" color="success" fill="outline" type="reset" disabled="true">{{'SAVE'
+        | translate}}
+      </ion-button>
 
-  <div id="posts" *ngIf="!this.segment">
-    <ion-item *ngFor="let p of posts; let i = index">
-      {{p.text}}
+      <ion-button *ngIf="user.valid" shape="round" color="success" fill="outline" type="submit">{{'SAVE' | translate}}
+      </ion-button>
+      <ion-button color="danger" shape="round" fill="outline" (click)="editOff()">
+        {{'CANCEL' | translate}}</ion-button>
+    </div>
+  </form><!-- aqui acaba perfil-->
+
+  <div id="posts" *ngIf="this.segment == 'post'">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button *ngIf="this.userService.profile.id == this.aut.user.id">
+        <ion-icon name="add-circle"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-item *ngFor="let p of posts; let i = index" lines="none">
+      <ion-card class="publication">
+
+        <ion-fab vertical="top" horizontal="end" *ngIf="this.userService.profile.id == this.aut.user.id">
+          <button ion-fab (click)="editPost(p.id)">
+            <ion-icon name="pencil"></ion-icon>
+          </button>
+          <button ion-fab (click)="delete(p.id)">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-fab>        
+        <ion-fab vertical="bottom" horizontal="end" (click)="toComments(p)">
+          <button ion-fab>
+            {{p.comments.length}}
+            <ion-icon name="chatbox-ellipses"></ion-icon>
+          </button>
+        </ion-fab>
+        <ion-card-header>
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img [src]="p.user.portrait" alt="">
+            </ion-avatar>
+            <ion-label><strong>{{p.user.username}}</strong> {{p.time.substr(0, 10)}} {{'TO HOUR' | translate}}
+              {{p.time.substr(11, p.time.length)}}</ion-label>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngFor="let img of p.images" alt="">
+            <img [src]="img.url" />
+          </div>
+          <div lines="none" [id]="'map'+p.id" style="width: 100%; height: 100% !important; float: left; padding-bottom: 20em;" *ngIf="p.coordinates">
+          </div>
+
+          {{p.text}}
+        </ion-card-content>
+      </ion-card>
     </ion-item>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="'LOADING' | translate">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+
+  <div id="petitions" *ngIf="this.segment == 'petitions'">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefreshPetitions($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-item *ngFor="let p of petition; let i = index" lines="none">
+      <ion-card>
+        <ion-card-header (click)="toProfile(p)">
+          <ion-item lines="none">
+            <img [src]="p.portrait" shape="round" alt="">
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label (click)="toProfile(p)"><strong>{{p.username}}</strong></ion-label>
+          <ion-fab style="z-index: 10; max-width: 1em; max-height: 1em;" vertical="bottom" horizontal="end" slot="fixed"
+            (click)="remove(p.id)">
+            <ion-fab-button style="max-width: 1em; max-height: 1em;">
+              <ion-icon name="add-circle"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataPetitions($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="'LOADING' | translate">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 </ion-content>

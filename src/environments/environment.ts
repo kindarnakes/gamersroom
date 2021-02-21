@@ -13,7 +13,7 @@ export const environment = {
     appId: "1:665020912112:web:9e41d8dde5e8243ee40d35",
     measurementId: "G-18J4MH1CMT"
   },
-  endpoint: "http://localhost:8000"
+  endpoint: "https://gamersroom-asg.herokuapp.com"
 };
 
 /*

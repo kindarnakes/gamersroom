@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><ion-icon name="arrow-back" (click)="back()"></ion-icon> {{'CHOOSE' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="text-align: center;">
+<h1>{{'CHOOSE' | translate}}</h1>
+  <ion-button 
+  shape="round"
+  color="primary"
+  fill="outline" (click)="this.gallery()">{{'GALLERY' | translate}}</ion-button>
+  <ion-button 
+  shape="round"
+  color="primary"
+  fill="outline" (click)="this.cameraOn()">{{'CAMERA' | translate}}</ion-button>
+</ion-content>

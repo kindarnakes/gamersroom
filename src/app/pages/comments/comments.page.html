@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><ion-icon name="arrow-back" (click)="back()"></ion-icon> {{'COMMENTS' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="publication">
+    <ion-card-header>
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img [src]="publication.user.portrait" alt="">
+        </ion-avatar>
+        <ion-label><strong>{{p.user.username}}</strong> {{p.time.substr(0, 10)}} {{'TO HOUR' | translate}}
+          {{p.time.substr(11, p.time.length)}}</ion-label>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngFor="let img of publication.images" alt="">
+        <img [src]="img.url" />
+      </div>
+      {{p.text}}
+    </ion-card-content>
+  </ion-card>
+  <div id="comments">
+    <ion-item *ngFor="let c of publication.comments;">
+      <ion-label>
+        {{c.user.username}}: {{c.text}}
+      </ion-label>
+
+    </ion-item>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <form [formGroup]="comment" (ngSubmit)="this.sendForm()">
+      <ion-input style="max-width: 70%;" type="text" formControlName="text" [placeholder]="'COMMENTA' | translate">
+        <ion-button shape="round" color="secondary" fill="outline" type="reset" disabled *ngIf="!comment.valid">{{'ENTRY' | translate}}
+        </ion-button>
+        <ion-button shape="round" color="secondary" fill="outline" type="submit" *ngIf="comment.valid">{{'ENTRY' | translate}}
+        </ion-button></ion-input>
+    </form>
+  </ion-toolbar>
+</ion-footer>

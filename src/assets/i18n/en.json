@@ -14,5 +14,12 @@
     "PROFILE": "Profile",
     "SIGN OUT": "Log out",
     "NO USER": "Invalid email and/or password",
-    "ERROR GOOGLE": "Can't log in your account"
+    "ERROR GOOGLE": "Can't log in your account",
+    "FRIENDS": "Friends",
+    "TO HOUR": " at ",
+    "GOOGLE IN": "Google login",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "POST": "Publications"
 }

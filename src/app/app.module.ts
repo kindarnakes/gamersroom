@@ -22,6 +22,14 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { UtilsService } from './services/utils.service';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { CameraService } from './services/camera.service';
+import { Camera } from '@ionic-native/camera/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { PublicationService } from './services/publication.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GeolocationService } from './services/geolocation.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 export function setTranslateLoader(http: any) {
@@ -41,7 +49,10 @@ export function setTranslateLoader(http: any) {
         useFactory: (setTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }), 
+    FormsModule, 
+    ReactiveFormsModule
+
   ],
   providers: [
     StatusBar,
@@ -52,7 +63,14 @@ export function setTranslateLoader(http: any) {
     HTTP,
     UserService,
     UtilsService,
-    GooglePlus
+    GooglePlus,
+    CameraService,
+    Camera,
+    Base64,
+    PublicationService,
+    NativeStorage,
+    GeolocationService,
+    Geolocation
   ],
   bootstrap: [AppComponent],
 })

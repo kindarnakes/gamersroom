@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{'REMOVE?' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="text-align: center;">
+<h1>{{'REMOVE?' | translate}}</h1>
+  <ion-button 
+  shape="round"
+  color="primary"
+  fill="outline" (click)="this.no()">{{'NO' | translate}}</ion-button>
+  <ion-button 
+  shape="round"
+  color="danger"
+  fill="outline" (click)="this.yes()">{{'YES' | translate}}</ion-button>
+</ion-content>

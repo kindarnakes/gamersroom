@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><ion-icon name="arrow-back" (click)="back()"></ion-icon> {{'PICK LOCATION' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="mapId" style="width: 100%; height: 80%">
+  </div>
+  <ion-button (click)="sendCoordinates()"><ion-icon name="locate" ></ion-icon></ion-button>
+</ion-content>

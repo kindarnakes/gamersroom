@@ -14,5 +14,12 @@
     "PROFILE": "Perfil",
     "SIGN OUT": "Salir",
     "NO USER": "Correo electrónico y/o contraseña incorrecto/s",
-    "ERROR GOOGLE": "No has podido loguearte en tu cuenta"
+    "ERROR GOOGLE": "No has podido loguearte en tu cuenta",
+    "FRIENDS": "Amigos",
+    "TO HOUR": " a las ",
+    "GOOGLE IN": "Login de Google",
+    "EDIT": "Editar",
+    "SAVE": "Guardar",
+    "CANCEL": "Cancelar",
+    "POST": "Publicaciones"
 }

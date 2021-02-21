@@ -30,6 +30,39 @@ const routes: Routes = [
     path: 'exit',
     loadChildren: () => import('./pages/exit/exit.module').then( m => m.ExitPageModule),
     canActivate: [AuthService]
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./pages/friends/friends.module').then( m => m.FriendsPageModule)
+  },
+  {
+    path: 'profile/:id',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate: [AuthService]
+  },
+  {
+    path: 'confirm',
+    loadChildren: () => import('./pages/confirm/confirm.module').then( m => m.ConfirmPageModule)
+  },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./pages/gallery/gallery.module').then( m => m.GalleryPageModule)
+  },
+  {
+    path: 'publication',
+    loadChildren: () => import('./pages/publication/publication.module').then( m => m.PublicationPageModule)
+  },
+  {
+    path: 'discover',
+    loadChildren: () => import('./pages/discover/discover.module').then( m => m.DiscoverPageModule)
+  },
+  {
+    path: 'comments',
+    loadChildren: () => import('./pages/comments/comments.module').then( m => m.CommentsPageModule)
+  },
+  {
+    path: 'map',
+    loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule)
   }
 ];
 

@@ -32,6 +32,24 @@ export class LoginPage implements OnInit {
 
 
   ngOnInit() {
+    this.aut.load()
+    .then(
+      async data => {
+        console.log(data);
+       if(data && data.id){ 
+      await this.userService.getUser(data.id).then(async r =>{
+        await this.utils.presentLoading();
+        this.autorize(r);
+      }).catch(async err =>{
+        this.aut.user = data;
+        this.userService.profile = this.aut.user;
+        await this.utils.presentLoading();
+        this.router.navigate(['discover'])
+      });}
+    }
+    ).catch(err =>{
+      console.log(err);
+    });;
     this.translate.get('NO USER').subscribe((res: string) => {
       this.error = res;
     });
@@ -53,26 +71,7 @@ export class LoginPage implements OnInit {
 
     this.userService.signIn(user).then(async r => {
       console.log(r);
-      if (r.data) {
-        let newUser = JSON.parse(r.data);
-        if (newUser.id && newUser.id > 0) {
-
-          this.aut.user = { ...newUser as User };
-          await this.utils.stopLoading();
-          console.log(this.aut.user);
-          this.userService.profile = this.aut.user;
-          console.log(this.userService.profile);
-          
-          
-          this.router.navigate(['profile']);
-        } else {
-          await this.utils.stopLoading();
-          await this.utils.presentToast(this.error, "danger");
-        }
-      } else {
-        await this.utils.stopLoading();
-        await this.utils.presentToast(this.error, "danger");
-      }
+      this.autorize(r);
 
     }).catch(async err => {
       await this.utils.stopLoading();
@@ -90,7 +89,8 @@ export class LoginPage implements OnInit {
       if(this.aut.isLoggin()){
         await this.utils.stopLoading();
         this.userService.profile = this.aut.user;
-        this.router.navigate(['profile']);
+        await this.utils.presentLoading();
+        this.router.navigate(['discover']);
       }else{
         await this.utils.stopLoading();
         await this.utils.presentToast(this.errorGoogle, "danger");
@@ -98,6 +98,31 @@ export class LoginPage implements OnInit {
     });
     console.log(this.aut.user);
     
+  }
+
+  async autorize(r:any){
+    
+    if (r.data) {
+      let newUser = JSON.parse(r.data);
+      if (newUser.id && newUser.id > 0) {
+
+        this.aut.user = { ...newUser as User };
+        await this.utils.stopLoading();
+        console.log(this.aut.user);
+        this.userService.profile = this.aut.user;
+        console.log(this.userService.profile);
+        
+        await this.utils.presentLoading();
+        this.router.navigate(['discover']);
+      } else {
+        await this.utils.stopLoading();
+        await this.utils.presentToast(this.error, "danger");
+      }
+    } else {
+      await this.utils.stopLoading();
+      await this.utils.presentToast(this.error, "danger");
+    }
+
   }
 
 }

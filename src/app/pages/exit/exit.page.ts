@@ -15,7 +15,7 @@ export class ExitPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    this.auth.signOut();
+    this.auth.signOut().then;
   }
 
 

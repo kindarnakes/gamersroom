@@ -28,13 +28,14 @@ ion-menu-button {
   }
 
   .username{
-    font-size: 1.8em;
-    text-align: center;
+    font-size: 1.2em;
   }
 
-  ion-avatar{
-    width: 100% !important;  
-    height : 100% !important;  
-    max-width: 15em !important;  //any size
-    max-height: 15em !important; //any size 
+  .avatar{
+    width: 6em !important;  
+    height : 6em !important;
   }
+
+  ion-refresher { 
+    z-index: 10;
+   }

@@ -4,5 +4,23 @@
        "changeOrigin": true,
        "secure": false,
        "logLevel": "debug"
-     }
+     },
+     "/publication": {
+      "target": "http://localhost:8080",
+      "changeOrigin": true,
+      "secure": false,
+      "logLevel": "debug"
+    },
+    "/publication/user": {
+     "target": "http://localhost:8080",
+     "changeOrigin": true,
+     "secure": false,
+     "logLevel": "debug"
+   },
+   "/comment": {
+    "target": "http://localhost:8080",
+    "changeOrigin": true,
+    "secure": false,
+    "logLevel": "debug"
+  }
 }

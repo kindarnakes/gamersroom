@@ -6,6 +6,7 @@ import { LoadingController, ModalController, ToastController } from '@ionic/angu
 })
 export class UtilsService {
   private loading;
+  
 
   constructor(public loadingController: LoadingController,
     public toastController: ToastController,
