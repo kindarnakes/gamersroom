@@ -8,18 +8,20 @@ export class CameraService {
 
 
   private optionsPhoto:CameraOptions = {
-    quality: 60,
-    destinationType: this.camera.DestinationType.FILE_URI,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
-  }
-
-  private optionsGallery:CameraOptions = {
-    quality: 60,
+    quality: 40,
     destinationType: this.camera.DestinationType.FILE_URI,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
-    sourceType:  this.camera.PictureSourceType.PHOTOLIBRARY
+    targetHeight: 500
+  }
+
+  private optionsGallery:CameraOptions = {
+    quality: 40,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    sourceType:  this.camera.PictureSourceType.PHOTOLIBRARY,
+    targetHeight: 500
   }
 
 

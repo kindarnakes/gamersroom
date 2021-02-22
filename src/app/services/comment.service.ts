@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 export class CommentService {
 
   
-  private endpoint = "/comment";
+  private endpoint = environment.endpoint+"/comment";
   constructor(private http: HTTP) { }
 
   public createComment(comment){

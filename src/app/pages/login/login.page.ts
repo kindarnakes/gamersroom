@@ -7,6 +7,7 @@ import * as CryptoJS from 'crypto-js';
 import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { TranslateService } from '@ngx-translate/core';
+import { FirebaseMessaging } from '@ionic-native/firebase-messaging/ngx';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginPage implements OnInit {
   constructor(public aut: AuthService,
     private formBuilder: FormBuilder, private router: Router, private userService: UserService,
     private utils: UtilsService,
-    private translate: TranslateService) {
+    private translate: TranslateService, private push: FirebaseMessaging) {
 
     this.user = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}$")]],
@@ -31,23 +32,24 @@ export class LoginPage implements OnInit {
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.utils.presentLoading();
     this.aut.load()
     .then(
       async data => {
-        console.log(data);
        if(data && data.id){ 
       await this.userService.getUser(data.id).then(async r =>{
-        await this.utils.presentLoading();
         this.autorize(r);
       }).catch(async err =>{
         this.aut.user = data;
         this.userService.profile = this.aut.user;
-        await this.utils.presentLoading();
-        this.router.navigate(['discover'])
-      });}
+        this.router.navigate(['discover']);
+      });}else{
+        await this.utils.stopLoading();
+      }
     }
-    ).catch(err =>{
+    ).catch(async err =>{
+      await this.utils.stopLoading();
       console.log(err);
     });;
     this.translate.get('NO USER').subscribe((res: string) => {
@@ -70,7 +72,6 @@ export class LoginPage implements OnInit {
 
 
     this.userService.signIn(user).then(async r => {
-      console.log(r);
       this.autorize(r);
 
     }).catch(async err => {
@@ -78,8 +79,6 @@ export class LoginPage implements OnInit {
       await this.utils.presentToast(this.error, "danger");
       console.log(err);
     });
-
-    console.log(user);
   }
 
   async logGoogle(){
@@ -96,7 +95,6 @@ export class LoginPage implements OnInit {
         await this.utils.presentToast(this.errorGoogle, "danger");
       }
     });
-    console.log(this.aut.user);
     
   }
 
@@ -108,9 +106,7 @@ export class LoginPage implements OnInit {
 
         this.aut.user = { ...newUser as User };
         await this.utils.stopLoading();
-        console.log(this.aut.user);
         this.userService.profile = this.aut.user;
-        console.log(this.userService.profile);
         
         await this.utils.presentLoading();
         this.router.navigate(['discover']);

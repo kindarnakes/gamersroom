@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'SETTINGS' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div style="display: flex; justify-content: center">
+    <div style="align-self: center">
+      <ion-label no-lines>{{'DARK_MODE' | translate}}</ion-label>
+    </div>
+    <ion-button (click)="this.toogleMode()" color="primary">
+      <ion-icon name="contrast"></ion-icon>
+    </ion-button>
+  </div>
+  <div style="display: flex; justify-content: center">
+    <div style="align-self: center">
+      <ion-label no-lines>{{this.tranS.language}}</ion-label>
+    </div>
+    <ion-toggle (click)="this.tranS.changeLanguage()"></ion-toggle>
+  </div>
+
+
+  <ion-radio-group value="this.aut.user.privacy">
+    <ion-item (click)="privacyPublic()" >
+      <ion-label>{{'PUBLIC' | translate}}</ion-label>
+      <ion-radio value="0" check="true"></ion-radio>
+    </ion-item>
+    <ion-item (click)="privacyOnlyFriends()">
+      <ion-label>{{'FRIENDSONLY' | translate}}</ion-label>
+      <ion-radio value="1"></ion-radio>
+    </ion-item>
+    <ion-item (click)="privacyOnlyMe()">
+      <ion-label>{{'ONLYME' | translate}}</ion-label>
+      <ion-radio value="2"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+
+  
+  <ion-button shape="round" color="secondary" fill="outline" *ngIf="!edit" (click)="editOn()">{{'EDITPASS' | translate}}
+  </ion-button>
+
+
+
+  <form [formGroup]="user" (ngSubmit)="this.sendForm()" *ngIf="edit">
+    <ion-item>
+      <ion-input type="password" formControlName="password" [placeholder]="'PASSWORD' | translate"></ion-input>
+    </ion-item>
+    <div id="errors">
+      <p class="alert alert-danger" *ngIf="this.user.controls.password.invalid && this.user.controls.password.errors.required && user.controls.password.touched">
+        <ion-item color="danger">
+        {{'PASSWORD REQUIRED' | translate}}
+      </ion-item>
+      </p>
+      <p class="alert alert-danger" *ngIf="this.user.controls.password.invalid && this.user.controls.password.errors.pattern && user.controls.password.touched">
+        <ion-item color="danger">
+        {{'PASSWORD INVALID' | translate}}
+      </ion-item>
+      </p>
+    </div>
+    <div style="text-align: right;">
+      <ion-button shape="round" color="secondary" fill="outline" type="reset" disabled *ngIf="!user.valid">{{'SAVE' | translate}}
+      </ion-button>
+      <ion-button shape="round" color="secondary" fill="outline" type="submit" *ngIf="user.valid">{{'SAVE' | translate}}
+      </ion-button>
+    </div>
+  </form>
+
+</ion-content>

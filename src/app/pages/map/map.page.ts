@@ -63,7 +63,6 @@ export class MapPage implements OnInit {
       this.marker.addTo(this.map);
 
       this.map.on('click', (coords) => {
-        console.log(coords);
         this.marker.setLatLng(coords.latlng);
       })
 

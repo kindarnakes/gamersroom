@@ -7,5 +7,6 @@ export interface User{
     pass?: string,
     description?: string,
     privacy?: number,
-    friends?: any[]
+    friends?: any[],
+    token?: string
 }

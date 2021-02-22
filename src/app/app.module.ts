@@ -30,6 +30,9 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeolocationService } from './services/geolocation.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { FirebaseMessaging } from '@ionic-native/firebase-messaging/ngx';
+import { Sensors } from '@ionic-native/sensors/ngx';
+import { LightService } from './services/light.service';
 
 
 export function setTranslateLoader(http: any) {
@@ -70,7 +73,10 @@ export function setTranslateLoader(http: any) {
     PublicationService,
     NativeStorage,
     GeolocationService,
-    Geolocation
+    Geolocation,
+    FirebaseMessaging,
+    Sensors,
+    LightService
   ],
   bootstrap: [AppComponent],
 })

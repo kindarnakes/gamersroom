@@ -6,6 +6,7 @@ import { AuthService } from './services/auth.service';
 import { TranslationService } from './services/translation.service';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from './services/user.service';
+import { LightService } from './services/light.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
     { title: 'PROFILE', url: '/profile', icon: 'person' },
     { title: 'FRIENDS', url: '/friends', icon: 'people' },
     { title: 'DISCOVER', url: '/discover', icon: 'globe' },
-    { title: 'SETINGS', url: '/settings', icon: 'settings' },
+    { title: 'SETTINGS', url: '/settings', icon: 'settings' },
     { title: 'SIGN OUT', url: '/exit', icon: 'log-out' },
   ];
   public noLogappPages = [
@@ -34,7 +35,8 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private tranS: TranslationService,
     public auth: AuthService,
-    public userService: UserService
+    public userService: UserService,
+    public lightService:LightService
   ) {
     this.initializeApp();
   }
@@ -46,6 +48,7 @@ export class AppComponent implements OnInit {
 
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.lightService.enableCheckDarkMode();
 
 
       this.translate.addLangs(this.tranS.languages);  //add all languages
@@ -64,7 +67,6 @@ export class AppComponent implements OnInit {
     const path = window.location.pathname.split('')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-      console.log(path);
       this.translate.get('PROFILE').subscribe((res: string) => {
         this.profile = res;
       });

@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -21,7 +21,7 @@
     <ion-card class="publication">
 
       <ion-fab vertical="top" horizontal="end" *ngIf="p.user.id == this.aut.user.id">
-        <button ion-fab (click)="editPost(p.id)">
+        <button ion-fab (click)="editPost(p,i)">
           <ion-icon name="pencil"></ion-icon>
         </button>
         <button ion-fab (click)="delete(p.id)">

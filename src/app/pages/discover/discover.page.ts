@@ -12,6 +12,7 @@ import { ConfirmPage } from '../confirm/confirm.page';
 import { PublicationPage } from '../publication/publication.page';
 import * as Leaflet from 'leaflet';
 import { icon, Marker } from 'leaflet';
+import { EditPostPage } from '../edit-post/edit-post.page';
 
 @Component({
   selector: 'app-discover',
@@ -53,16 +54,23 @@ export class DiscoverPage implements OnInit {
     if (!this.utils.loadingController) {
       await this.utils.presentLoading();
     }
-    this.loadpost();
+    await this.loadpost();
+
+
     if (this.utils.loadingController) {
       await this.utils.stopLoading();
     }
 
   }
 
-  editPost(id) {
-
+  editPost(post, index) {
+    this.utils.modal(EditPostPage, {postToEdit: post}).then(data => {
+      if(data.data){
+        this.posts[index] = data.data
+      }
+    });
   }
+
 
   delete(id) {
     this.utils.modal(ConfirmPage, {})
@@ -90,8 +98,6 @@ export class DiscoverPage implements OnInit {
 
   toComments(publication: publication) {
 
-    console.log(publication);
-
     this.utils.modal(CommentsPage, { publication: publication }).then(data => {
     });
   }
@@ -105,7 +111,6 @@ export class DiscoverPage implements OnInit {
         for (let p of publications) {
           this.posts.push(p);
           setTimeout(async () => {
-            console.log(p.coordinates);
             
             if (p.coordinates) {
               let map = await Leaflet.map('map' + p.id).setView([p.coordinates.latitude, p.coordinates.longitude], 200);
@@ -146,8 +151,10 @@ export class DiscoverPage implements OnInit {
   posting() {
     this.utils.modal(PublicationPage, {}).then(data => {
       if(data.data){
-        console.log(data.data);
       }
+    }).catch(err => {
+      console.log(err);
+      
     });
   }
 

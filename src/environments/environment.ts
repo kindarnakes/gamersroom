@@ -11,7 +11,8 @@ export const environment = {
     storageBucket: "gamer-s-room.appspot.com",
     messagingSenderId: "665020912112",
     appId: "1:665020912112:web:9e41d8dde5e8243ee40d35",
-    measurementId: "G-18J4MH1CMT"
+    measurementId: "G-18J4MH1CMT",
+    vapidKey: "BD6zz1gymHk7s1wSVV2o2nyGngOQghtiFzFvQCpcmpJ1RuyTk18RM33MtENF_qC-I2e43BE3qSMlMdZBSxxIn_c"
   },
   endpoint: "https://gamersroom-asg.herokuapp.com"
 };

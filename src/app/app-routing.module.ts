@@ -33,7 +33,8 @@ const routes: Routes = [
   },
   {
     path: 'friends',
-    loadChildren: () => import('./pages/friends/friends.module').then( m => m.FriendsPageModule)
+    loadChildren: () => import('./pages/friends/friends.module').then( m => m.FriendsPageModule),
+    canActivate: [AuthService]
   },
   {
     path: 'profile/:id',
@@ -54,7 +55,8 @@ const routes: Routes = [
   },
   {
     path: 'discover',
-    loadChildren: () => import('./pages/discover/discover.module').then( m => m.DiscoverPageModule)
+    loadChildren: () => import('./pages/discover/discover.module').then( m => m.DiscoverPageModule),
+    canActivate: [AuthService]
   },
   {
     path: 'comments',
@@ -63,6 +65,15 @@ const routes: Routes = [
   {
     path: 'map',
     loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule),
+    canActivate: [AuthService]
+  },
+  {
+    path: 'edit-post',
+    loadChildren: () => import('./pages/edit-post/edit-post.module').then( m => m.EditPostPageModule)
   }
 ];
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FirebaseMessaging } from '@ionic-native/firebase-messaging/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { environment } from 'src/environments/environment';
@@ -9,11 +10,11 @@ import { User } from '../model/user';
 })
 export class UserService {
 
-  private endpoint = "/user";
+  private endpoint = environment.endpoint + "/user";
   private _profile: User;
 
   constructor(private http: HTTP,
-    private google: GooglePlus) { }
+    private google: GooglePlus, private push:FirebaseMessaging) { }
 
   signUp(user: User) {
     this.http.setDataSerializer('json');

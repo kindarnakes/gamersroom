@@ -44,13 +44,11 @@ export class SignupPage implements OnInit {
     }
 
     this.userService.signUp(user).then(r => {
-      console.log(r);
       if (r.data) {
         let newUser = JSON.parse(r.data);
         if (newUser.id && newUser.id > 0) {
           user.id = newUser.id;
           this.aut.user = user;
-          console.log(this.aut.isLoggin());
           this.router.navigate(['login']);
         }
       }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { ModalController } from '@ionic/angular';
@@ -12,13 +12,14 @@ import { icon, Marker } from 'leaflet';
 import { PublicationService } from 'src/app/services/publication.service';
 
 @Component({
-  selector: 'app-publication',
-  templateUrl: './publication.page.html',
-  styleUrls: ['./publication.page.scss'],
+  selector: 'app-edit-post',
+  templateUrl: './edit-post.page.html',
+  styleUrls: ['./edit-post.page.scss'],
 })
-export class PublicationPage implements OnInit {
+export class EditPostPage implements OnInit {
 
-  
+  @Input('postToEdit') postToEdit: publication;
+
   private win: any = window;
   public publication: FormGroup;
 
@@ -61,6 +62,28 @@ export class PublicationPage implements OnInit {
 
    }
 
+   async ionViewDidEnter(){
+     this.post = {...this.postToEdit};
+     this.publication.get('text').setValue(this.post.text);
+     this.post.images.forEach(img => {
+        this.images.push(img.url);
+     })
+     
+
+     if(this.post.coordinates){
+      this.showMap = true;
+      setTimeout(async () =>{
+
+     this.map = await Leaflet.map('mapEdit'+this.post.id).setView([this.post.coordinates.latitude, this.post.coordinates.longitude], 200);
+     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+       attribution: 'ies Francisco de los Rios',
+     }).addTo(this.map);
+ 
+ 
+     this.marker = Leaflet.marker([this.post.coordinates.latitude, this.post.coordinates.longitude], {icon: this.iconDefault})
+     this.marker.addTo(this.map);
+   }, 200);}}
+
   ngOnInit() {
 
     this.post = {
@@ -79,9 +102,8 @@ export class PublicationPage implements OnInit {
   }
 
   async sendForm(){
-    await this.utils.presentLoading();
-    this.PublicationService.savePublication(this.post).then(async r => {
-      
+    await this.utils.presentLoading()
+    this.PublicationService.updatePublication(this.post).then(async r => {
       await this.utils.stopLoading();
       await this.modalController.dismiss( await JSON.parse(r.data));
     }).catch(async err =>{
@@ -97,15 +119,10 @@ export class PublicationPage implements OnInit {
       this.utils.modal(GalleryPage, {}).then(async image => {
         if(image.data){
         await this.utils.presentLoading();
-        let img = image.data;        
-        if (img.startsWith('file') || img.startsWith('/storage')) {
-          img.replace(' ', '');
-          console.log(img);
-          console.log(
+        let img = image.data;
+        if (img.startsWith('file') || img.startsWith('/') ) {
+          this.images.push(
             this.win.Ionic.WebView.convertFileSrc(img));
-          
-          
-          this.images.push(this.win.Ionic.WebView.convertFileSrc(img));
           await this.base64.encodeFile(image.data).then(
             (base64: any) => {
               img = base64.substr(13, base64.length);
@@ -127,7 +144,11 @@ export class PublicationPage implements OnInit {
 
       if(coords.data){
         setTimeout(async () =>{
-        this.map = await Leaflet.map('mapPub').setView([coords.data.lat, coords.data.lng], 200);
+
+          if(this.map){
+            this.map.remove()
+          }
+        this.map = await Leaflet.map('mapEdit'+this.post.id).setView([coords.data.lat, coords.data.lng], 200);
         Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: 'ies Francisco de los Rios',
         }).addTo(this.map);
@@ -139,14 +160,13 @@ export class PublicationPage implements OnInit {
           latitude: coords.data.lat, 
           longitude: coords.data.lng
         }
-        
 
-        }, 100);
+        }, 200);
     }else{
+      this.map.remove();
       this.showMap = false;
       this.post.coordinates = null;
-      
-      this.map.remove();
+      console.log('destroy');
     }
       
     }).catch(err =>{

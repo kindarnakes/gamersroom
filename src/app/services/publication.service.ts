@@ -8,7 +8,7 @@ import { publication } from '../model/publication';
 })
 export class PublicationService {
 
-  private endpoint = "/publication";
+  private endpoint = environment.endpoint + "/publication";
 
   constructor(private http: HTTP) { }
 

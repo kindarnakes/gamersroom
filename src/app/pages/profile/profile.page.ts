@@ -17,6 +17,8 @@ import { FriendsPage } from '../friends/friends.page';
 import { GalleryPage } from '../gallery/gallery.page';
 import * as Leaflet from 'leaflet';
 import { icon, Marker } from 'leaflet';
+import { PublicationPage } from '../publication/publication.page';
+import { EditPostPage } from '../edit-post/edit-post.page';
 
 @Component({
   selector: 'app-profile',
@@ -144,7 +146,6 @@ export class ProfilePage implements OnInit {
         for (let p of publications) {
           this.posts.push(p);
           setTimeout(async () => {
-            console.log(p.coordinates);
             
             if (p.coordinates) {
               let map = await Leaflet.map('map' + p.id).setView([p.coordinates.latitude, p.coordinates.longitude], 200);
@@ -175,7 +176,6 @@ export class ProfilePage implements OnInit {
         await this.base64.encodeFile(image.data).then(
           (base64: any) => {
             img = base64.substr(13, base64.length);
-            console.log(img);
             let user = this.userService.profile;
             user.portrait = 'data:image/jpeg;base64' + img;
             this.userService.profile = user;
@@ -187,7 +187,6 @@ export class ProfilePage implements OnInit {
       }
 
       this.userService.updateUser(this.userService.profile).then(async r => {
-        console.log(r.data);
         if (r.data) {
           let newUser = JSON.parse(r.data);
           if (newUser.id && newUser.id > 0) {
@@ -232,7 +231,6 @@ export class ProfilePage implements OnInit {
 
 
     this.userService.updateUser(this.userService.profile).then(async r => {
-      console.log(r);
       if (r.data) {
         let newUser = JSON.parse(r.data);
         if (newUser.id && newUser.id > 0) {
@@ -263,16 +261,11 @@ export class ProfilePage implements OnInit {
     this.userService.addFriend(this.aut.user.id, this.userService.profile.id).then(r => {
       if (r.data) {
         let petition = JSON.parse(r.data);
-        console.log(petition);
 
         if (petition) {
 
 
           this.aut.friends.push(this.userService.profile.id);
-          console.log(this.userService.profile);
-
-          console.log(this.aut.friends);
-          console.log(this.aut.friends.includes(this.userService.profile.id));
 
         }
       }
@@ -347,12 +340,17 @@ export class ProfilePage implements OnInit {
         }
       });
   }
-  editPost(id) {
-    console.log('edit ' + id);
+  
+  editPost(post, index) {
+    this.utils.modal(EditPostPage, {postToEdit: post}).then(data => {
+      if(data.data){
+        this.posts[index] = data.data
+      }
+    });
   }
-  toComments(publication:publication) {
 
-    console.log(publication);
+
+  toComments(publication:publication) {
     
     this.utils.modal(CommentsPage, { publication: publication }).then(data => {
     });
@@ -366,6 +364,36 @@ export class ProfilePage implements OnInit {
     }
 
 
+  }
+
+  posting() {
+    this.utils.modal(PublicationPage, {}).then(data => {
+    }).catch(err=>{
+      console.log(err);
+      
+    });
+  }
+
+  removeFriend(){
+    this.userService.removeFriend(this.aut.user.id, this.userService.profile.id).then(r=>{
+      let newFriends = [];
+      let newIdFriends = [];
+      for(let f of this.aut.user.friends){
+        
+        if(f.id != this.userService.profile.id){
+          newIdFriends.push(f.id);
+          newFriends.push(f)
+        }
+      }
+      
+      this.aut.user.friends = newFriends;
+      this.aut.friends = newIdFriends;
+      console.log(this.aut.user.friends);
+      
+    }).catch(err =>{
+
+    });
+    
   }
 
 }

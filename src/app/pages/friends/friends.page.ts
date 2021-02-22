@@ -26,10 +26,17 @@ export class FriendsPage implements OnInit {
   async ngOnInit() {
   }
 
-  async ionViewDidEnter(){
+  ionViewDidEnter(){
+    this.enter();
+  }
+
+  async enter(){
     await this.utils.presentLoading();
+    this.page=1;
+    this.friends = [];
     await this.load();
     await this.utils.stopLoading();
+
   }
 
   async doRefresh($event){
@@ -57,7 +64,6 @@ export class FriendsPage implements OnInit {
       
       if(r.data){
         let friends = await JSON.parse(r.data);
-        console.log(friends);
         for(let p of friends){
           this.friends.push(p);
         }
@@ -77,18 +83,17 @@ export class FriendsPage implements OnInit {
   }
 
   remove(id:number){
-    console.log(id);
     this.userService.removeFriend(this.auth.user.id, id).then(r=>{
       let newFriends = [];
       let newIdFriends = [];
       for(let f of this.friends){
         
         if(f.id != id){
-          newFriends.push(f.id);
+          newIdFriends.push(f.id);
           newFriends.push(f);
         }
       }
-      this.auth.friends = newFriends;
+      this.auth.friends = newIdFriends;
       this.friends = newFriends;
       
     }).catch(err =>{
@@ -98,7 +103,6 @@ export class FriendsPage implements OnInit {
   }
 
   async onInput($event){
-    if($event.length > 3){
       this.isremovable = false;
       this.friends = [];
       await this.utils.presentLoading();
@@ -106,7 +110,6 @@ export class FriendsPage implements OnInit {
       
         if(r.data){
           let friends = await JSON.parse(r.data);
-          console.log(friends);
           for(let p of friends){
             this.friends.push(p);
           }
@@ -117,9 +120,6 @@ export class FriendsPage implements OnInit {
         console.log(err);
         await this.utils.stopLoading();
       });
-    }
-    
-
   }
 
   async onCancel($event){

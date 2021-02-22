@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      <ion-icon name="arrow-back" (click)="back()"></ion-icon> {{'PUBLICATION' | translate}}
+      <ion-icon name="arrow-back" (click)="back()"></ion-icon> {{'EDIT' | translate}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,13 +20,13 @@
     </ion-item>
 
 
-    <!--<ion-item lines="none" style="text-align: center;">
+    <!--  <ion-item lines="none" style="text-align: center;">
       <ion-button color="secondary" (click)="addVideo()">{{'VIDEO' | translate}}
       </ion-button>
       <ion-button color="secondary">{{'AUDIO' | translate}}
       </ion-button>
     </ion-item>
-  -->
+-->
 
 
 
@@ -59,7 +59,7 @@
       <div *ngFor="let img of images; let i = index" alt="">
         <img [src]="img" (click)="deleteImg(i)"/>
       </div>
-      <div lines="none" id="mapPub" style="width: 100%; height: 100% !important; float: left; padding-bottom: 20em;" *ngIf="showMap">
+      <div lines="none" [id]="'mapEdit'+post.id" style="width: 100%; height: 100% !important; float: left; padding-bottom: 20em;" *ngIf="this.showMap">
       </div>
       {{post.text}}
     </ion-card-content>

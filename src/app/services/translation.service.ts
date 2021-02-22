@@ -31,6 +31,17 @@ export class TranslationService {
   }
 
 
+  public changeLanguage(){
+    if(this.language == this.languages[0]){
+      this.language = this.languages[1];
+      this.translate.use(this.language);
+    }else{
+      this.language = this.languages[0];
+      this.translate.use(this.language);
+    }
+  }
+
+
 
 }
 

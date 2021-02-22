@@ -23,8 +23,7 @@ export class CommentsPage implements OnInit {
    }
 
   ngOnInit() {
-    this.p = this.publication; 
-    console.log(this.p.user);
+    this.p = this.publication;
     
   }
 

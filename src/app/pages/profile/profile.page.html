@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -22,7 +22,14 @@
   <form id="profile" *ngIf="this.segment == 'profile'" [formGroup]="user" (ngSubmit)="this.editUser()">
 
 
+
+
+
+
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="danger" (click)="removeFriend()" *ngIf="this.userService.profile.id != this.aut.user.id && (this.aut.friends.indexOf(this.userService.profile.id) >= 0)">
+        <ion-icon name="person-remove"></ion-icon>
+      </ion-fab-button>
       <ion-fab-button (click)="addFriend()"
         *ngIf="this.userService.profile.id != this.aut.user.id && !(this.aut.friends.indexOf(this.userService.profile.id) >= 0)">
         <ion-icon name="person-add"></ion-icon>
@@ -71,7 +78,7 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <ion-fab vertical="top" horizontal="end" slot="fixed">
-      <ion-fab-button *ngIf="this.userService.profile.id == this.aut.user.id">
+      <ion-fab-button *ngIf="this.userService.profile.id == this.aut.user.id" (click)="posting()">
         <ion-icon name="add-circle"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -79,7 +86,7 @@
       <ion-card class="publication">
 
         <ion-fab vertical="top" horizontal="end" *ngIf="this.userService.profile.id == this.aut.user.id">
-          <button ion-fab (click)="editPost(p.id)">
+          <button ion-fab (click)="editPost(p,i)">
             <ion-icon name="pencil"></ion-icon>
           </button>
           <button ion-fab (click)="delete(p.id)">
@@ -129,15 +136,15 @@
       <ion-card>
         <ion-card-header (click)="toProfile(p)">
           <ion-item lines="none">
-            <img [src]="p.portrait" shape="round" alt="">
+            <img [src]="p.portrait" shape="round" alt="" style="max-width: 6em; max-width: 6em;">
           </ion-item>
         </ion-card-header>
         <ion-card-content>
           <ion-label (click)="toProfile(p)"><strong>{{p.username}}</strong></ion-label>
           <ion-fab style="z-index: 10; max-width: 1em; max-height: 1em;" vertical="bottom" horizontal="end" slot="fixed"
             (click)="remove(p.id)">
-            <ion-fab-button style="max-width: 1em; max-height: 1em;">
-              <ion-icon name="add-circle"></ion-icon>
+            <ion-fab-button color="danger" style="max-width: 1em; max-height: 1em;">
+              <ion-icon name="person-remove"></ion-icon>
             </ion-fab-button>
           </ion-fab>
         </ion-card-content>
